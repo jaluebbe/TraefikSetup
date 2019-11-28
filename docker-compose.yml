@@ -41,6 +41,21 @@ services:
       - "traefik.http.routers.heightmap-router.entrypoints=websecure"
       - "traefik.http.routers.heightmap-router.tls.certresolver=leresolver"
 
+  surfacemap:
+    image: surface_map_docker
+    volumes:
+      - $PWD/../SurfaceMap/surface_map/maps:/app/surface_map/maps
+    labels:
+      - "traefik.http.routers.surfacemap.rule=Host(`surfacemap.${MY_DOMAIN}`)"
+      - "traefik.http.routers.surfacemap.entrypoints=websecure"
+      - "traefik.http.routers.surfacemap.tls=true"
+      - "traefik.http.routers.surfacemap.tls.certresolver=leresolver"
+      - "traefik.http.middlewares.strip-surfacemap.stripprefix.prefixes=/surfacemap"
+      - "traefik.http.routers.surfacemap-router.rule=(Host(`${MY_DOMAIN}`) && PathPrefix(`/surfacemap`))"
+      - "traefik.http.routers.surfacemap-router.middlewares=strip-surfacemap@docker"
+      - "traefik.http.routers.surfacemap-router.entrypoints=websecure"
+      - "traefik.http.routers.surfacemap-router.tls.certresolver=leresolver"
+
   whoami:
       image: "containous/whoami"
       container_name: "whoami"
