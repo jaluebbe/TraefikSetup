@@ -56,6 +56,21 @@ services:
       - "traefik.http.routers.surfacemap-router.entrypoints=websecure"
       - "traefik.http.routers.surfacemap-router.tls.certresolver=leresolver"
 
+  flightmap:
+    image: flightmap_europe_simple
+    volumes:
+      - $PWD/../FlightMapEuropeSimple/flightroutes:/app/flightroutes
+    labels:
+      - "traefik.http.routers.flightmap.rule=Host(`flightmap.${MY_DOMAIN}`)"
+      - "traefik.http.routers.flightmap.entrypoints=websecure"
+      - "traefik.http.routers.flightmap.tls=true"
+      - "traefik.http.routers.flightmap.tls.certresolver=leresolver"
+      - "traefik.http.middlewares.strip-flightmap.stripprefix.prefixes=/flightmap"
+      - "traefik.http.routers.flightmap-router.rule=(Host(`${MY_DOMAIN}`) && PathPrefix(`/flightmap`))"
+      - "traefik.http.routers.flightmap-router.middlewares=strip-flightmap@docker"
+      - "traefik.http.routers.flightmap-router.entrypoints=websecure"
+      - "traefik.http.routers.flightmap-router.tls.certresolver=leresolver"
+
   whoami:
       image: "containous/whoami"
       container_name: "whoami"
