@@ -3,7 +3,7 @@ version: "3"
 services:
 
   traefik:
-    image: "traefik:v2.0.5"
+    image: "traefik:v2.0.6"
     container_name: "traefik"
     command:
       - --entrypoints.web.address=:80
@@ -36,7 +36,7 @@ services:
       - "traefik.http.routers.heightmap.tls=true"
       - "traefik.http.routers.heightmap.tls.certresolver=leresolver"
       - "traefik.http.middlewares.strip-heightmap.stripprefix.prefixes=/heightmap"
-      - "traefik.http.routers.heightmap-router.rule=(Host(`${MY_DOMAIN}`) && PathPrefix(`/heightmap`))"
+      - "traefik.http.routers.heightmap-router.rule=(Host(`${MY_DOMAIN}`) && PathPrefix(`/heightmap/`))"
       - "traefik.http.routers.heightmap-router.middlewares=strip-heightmap@docker"
       - "traefik.http.routers.heightmap-router.entrypoints=websecure"
       - "traefik.http.routers.heightmap-router.tls.certresolver=leresolver"
@@ -51,7 +51,7 @@ services:
       - "traefik.http.routers.surfacemap.tls=true"
       - "traefik.http.routers.surfacemap.tls.certresolver=leresolver"
       - "traefik.http.middlewares.strip-surfacemap.stripprefix.prefixes=/surfacemap"
-      - "traefik.http.routers.surfacemap-router.rule=(Host(`${MY_DOMAIN}`) && PathPrefix(`/surfacemap`))"
+      - "traefik.http.routers.surfacemap-router.rule=(Host(`${MY_DOMAIN}`) && PathPrefix(`/surfacemap/`))"
       - "traefik.http.routers.surfacemap-router.middlewares=strip-surfacemap@docker"
       - "traefik.http.routers.surfacemap-router.entrypoints=websecure"
       - "traefik.http.routers.surfacemap-router.tls.certresolver=leresolver"
@@ -66,7 +66,7 @@ services:
       - "traefik.http.routers.flightmap.tls=true"
       - "traefik.http.routers.flightmap.tls.certresolver=leresolver"
       - "traefik.http.middlewares.strip-flightmap.stripprefix.prefixes=/flightmap"
-      - "traefik.http.routers.flightmap-router.rule=(Host(`${MY_DOMAIN}`) && PathPrefix(`/flightmap`))"
+      - "traefik.http.routers.flightmap-router.rule=(Host(`${MY_DOMAIN}`) && PathPrefix(`/flightmap/`))"
       - "traefik.http.routers.flightmap-router.middlewares=strip-flightmap@docker"
       - "traefik.http.routers.flightmap-router.entrypoints=websecure"
       - "traefik.http.routers.flightmap-router.tls.certresolver=leresolver"
